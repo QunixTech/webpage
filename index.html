@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,43 +6,126 @@
   <title>QunixTech | Shaping Next-Gen Solutions</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="QunixTech Logo" class="logo" />
-    <nav>
-      <a href="#solutions">Solutions</a>
-      <a href="#industries">Industries</a>
-      <a href="#team">Our Team</a>
-      <a href="#careers">Careers</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="container nav-container">
+      <img src="branding.png" alt="QunixTech Logo" class="logo" />
+      <nav>
+        <a href="#solutions">Solutions</a>
+        <a href="#industries">Industries</a>
+        <a href="#team">Team</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <section id="hero">
-      <h1>QunixTech</h1>
-      <p>Shaping Next-Gen Solutions</p>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <img src="branding.png" alt="QunixTech Logo" class="hero-logo" />
+        <h1>QunixTech</h1>
+        <p class="tagline">Shaping Next-Gen Solutions</p>
+        <a href="#solutions" class="cta-btn">Explore Solutions</a>
+      </div>
+      <div class="gradient-bg"></div>
     </section>
-
-    <section id="careers">
-      <h2>Careers</h2>
-      <p>We’re always looking for passionate innovators, engineers, and tech enthusiasts to join our team.</p>
-      <p>Email your CV to <a href="mailto:careers@qunixtech.com">careers@qunixtech.com</a> or use the form below:</p>
-      <form action="https://formspree.io/f/your-form-id" method="POST" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Your Name" required><br>
-        <input type="email" name="_replyto" placeholder="Your Email" required><br>
-        <textarea name="message" placeholder="Your Message" required></textarea><br>
-        <input type="file" name="resume" required><br>
-        <button type="submit">Submit CV</button>
-      </form>
+    
+    <!-- Solutions Section -->
+    <section id="solutions" class="info-section">
+      <div class="container">
+        <h2>Our Solutions</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <h3>AI & Automation</h3>
+            <p>Unlock productivity with smart automation and data-driven insights.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔒</div>
+            <h3>Cybersecurity</h3>
+            <p>Protect your digital assets with next-gen security solutions.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">☁️</div>
+            <h3>Cloud Services</h3>
+            <p>Scale your business with robust and flexible cloud infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Industries Section -->
+    <section id="industries" class="info-section vibrant-bg">
+      <div class="container">
+        <h2>Industries Served</h2>
+        <div class="industry-grid">
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&fit=crop&w=400&q=80" alt="Aerospace - Airplane in a hangar" />
+            <h3>Aerospace</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Automotive - Red car dashboard/steering wheel" />
+            <h3>Automotive</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=400&q=80" alt="MRO - Technician working on machinery" />
+            <h3>MRO</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Healthcare - Healthcare professional in scrubs" />
+            <h3>Healthcare</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Finance - Financial charts and computer" />
+            <h3>Finance</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1461344577544-4e5dc9487184?auto=format&fit=crop&w=400&q=80" alt="Manufacturing - Factory interior" />
+            <h3>Manufacturing</h3>
+          </div>
+          <div class="industry-card">
+            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80" alt="Retail - Clothing store interior" />
+            <h3>Retail</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section id="team" class="info-section">
+      <div class="container">
+        <h2>Our Team</h2>
+        <p class="section-desc">A collective of passionate engineers, designers, and strategists powering transformative solutions.</p>
+      </div>
+    </section>
+    
+    <!-- Careers Section -->
+    <section id="careers" class="info-section alt-bg">
+      <div class="container">
+        <h2>Careers</h2>
+        <p>We're always looking for passionate innovators, engineers, and tech enthusiasts to join our team.</p>
+        <a href="mailto:careers@qunixtech.com" class="cta-btn secondary">Apply Now</a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 QunixTech. All rights reserved.</p>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/company/qunixtech" target="_blank">LinkedIn</a>
+    <div class="container footer-content">
+      <div>
+        <img src="branding.png" alt="QunixTech Logo" class="footer-logo" />
+        <p>&copy; 2025 QunixTech. All rights reserved.</p>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/qunixtech" target="_blank" aria-label="LinkedIn">
+          <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.604c0-1.098-.021-2.509-1.529-2.509-1.529 0-1.764 1.194-1.764 2.426v4.687h-3v-9h2.882v1.233h.041c.401-.76 1.38-1.561 2.841-1.561 3.041 0 3.604 2.004 3.604 4.609v4.719z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </footer>
 </body>
