@@ -1,132 +1,797 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QunixTech | Shaping Next-Gen Solutions</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>QunixTech | Shaping Next-Gen Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#050d1a;
+  --bg2:#081628;
+  --cyan:#00d4ff;
+  --pink:#ff0077;
+  --green:#00ff88;
+  --text:#e8f4ff;
+  --muted:#4a7a9b;
+  --card:#0a1f38;
+  --r:16px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+a{color:var(--cyan);text-decoration:none;}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,13,26,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,212,255,0.1);transition:all .3s;}
+nav.scrolled{background:rgba(5,13,26,0.97);}
+.nav-brand img{height:44px;width:auto;display:block;}
+.nav-links a{color:rgba(232,244,255,0.75);font-size:.85rem;font-weight:600;margin-left:2rem;letter-spacing:.5px;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--cyan);transition:width .2s;}
+.nav-links a:hover{color:var(--cyan);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:linear-gradient(90deg,var(--pink),var(--cyan));color:#fff!important;padding:8px 20px;border-radius:20px;font-weight:700!important;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{opacity:.88;color:#fff!important;}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;overflow:hidden;}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-content{position:relative;z-index:2;padding:0 2rem;max-width:700px;margin:0 auto 0 8vw;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:3px;color:var(--cyan);border:1px solid rgba(0,212,255,.3);display:inline-block;padding:5px 14px;border-radius:20px;margin-bottom:1.5rem;background:rgba(0,212,255,.06);}
+.hero-logo{width:min(380px,80vw);height:auto;margin-bottom:1.2rem;display:block;filter:drop-shadow(0 0 24px rgba(0,212,255,.35));animation:logoGlow 4s ease-in-out infinite;}
+@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 18px rgba(0,212,255,.3));}50%{filter:drop-shadow(0 0 36px rgba(0,212,255,.6)) drop-shadow(0 0 60px rgba(255,0,119,.2));}}
+.hero-h1{font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1;letter-spacing:-3px;margin-bottom:.5rem;}
+.hero-h1 .q{background:linear-gradient(135deg,var(--cyan) 30%,var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:clamp(1rem,2vw,1.4rem);color:rgba(232,244,255,.6);font-weight:300;margin-bottom:1.2rem;letter-spacing:.5px;}
+.hero-desc{font-size:1rem;color:rgba(232,244,255,.55);line-height:1.8;max-width:520px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:13px 30px;border-radius:30px;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s;border:none;}
+.btn-primary{background:linear-gradient(90deg,var(--pink),var(--cyan));color:#fff;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,119,.3);color:#fff;}
+.btn-outline{background:transparent;color:var(--cyan);border:1.5px solid var(--cyan);}
+.btn-outline:hover{background:rgba(0,212,255,.08);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3rem;flex-wrap:wrap;}
+.stat-item .val{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--cyan);}
+.stat-item .lbl{font-size:.75rem;color:var(--muted);letter-spacing:1px;margin-top:.2rem;}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* SECTION COMMONS */
+section{padding:100px 2rem;}
+.sec-inner{max-width:1200px;margin:0 auto;}
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:3px;color:var(--cyan);margin-bottom:.7rem;}
+.sec-h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:.8rem;color:#fff;}
+.sec-h2 span{background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sec-lead{color:var(--muted);font-size:1rem;line-height:1.7;max-width:580px;margin-bottom:3rem;}
+
+/* ENGINEERING SECTION */
+#engineering{background:var(--bg);}
+.eng-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;}
+.eng-card{background:var(--card);border:1px solid rgba(0,212,255,.1);border-radius:var(--r);padding:1.8rem;position:relative;overflow:hidden;cursor:default;transition:all .3s;}
+.eng-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,.06),transparent);opacity:0;transition:opacity .3s;}
+.eng-card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,212,255,.1);}
+.eng-card:hover::before{opacity:1;}
+.eng-icon{font-size:1.8rem;margin-bottom:1rem;}
+.eng-card h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+.eng-card p{font-size:.82rem;color:var(--muted);line-height:1.6;}
+.eng-card .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--cyan);border:1px solid rgba(0,212,255,.25);padding:2px 8px;border-radius:6px;margin-top:.8rem;}
+
+/* ANIMATED CIRCUIT LINE */
+.circuit-divider{height:80px;position:relative;overflow:hidden;}
+#circuit-canvas{width:100%;height:80px;}
+
+/* SOLUTIONS SECTION */
+#solutions{background:var(--bg2);}
+.sol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+.sol-card{background:var(--card);border-radius:var(--r);padding:2rem;border:1px solid rgba(255,0,119,.12);position:relative;overflow:hidden;transition:all .3s;}
+.sol-card:hover{border-color:rgba(255,0,119,.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(255,0,119,.1);}
+.sol-num{font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:700;color:rgba(255,0,119,.15);line-height:1;margin-bottom:.5rem;}
+.sol-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+.sol-card p{font-size:.85rem;color:var(--muted);line-height:1.6;}
+.sol-bar{height:2px;background:linear-gradient(90deg,var(--pink),transparent);margin-top:1.2rem;border-radius:1px;width:0;transition:width .8s ease;}
+.sol-card:hover .sol-bar{width:100%;}
+
+/* VALVE HEALTH */
+#valve{background:linear-gradient(160deg,#07111f,#0a1d35 60%,#07111f);border-top:1px solid rgba(0,212,255,.08);border-bottom:1px solid rgba(0,212,255,.08);position:relative;overflow:hidden;}
+.valve-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;}
+.valve-canvas-wrap{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(0,212,255,.2);background:#040c18;}
+#valve-canvas{display:block;width:100%;height:340px;}
+.valve-features{display:flex;flex-direction:column;gap:1.4rem;}
+.vf{display:flex;gap:1rem;align-items:flex-start;}
+.vf-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);flex-shrink:0;margin-top:6px;box-shadow:0 0 8px var(--cyan);}
+.vf-dot.pink{background:var(--pink);box-shadow:0 0 8px var(--pink);}
+.vf-dot.green{background:var(--green);box-shadow:0 0 8px var(--green);}
+.vf h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.3rem;}
+.vf p{font-size:.82rem;color:var(--muted);line-height:1.6;}
+.valve-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,0,119,.1);border:1px solid rgba(255,0,119,.3);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--pink);margin-bottom:1rem;letter-spacing:1px;}
+
+/* INDUSTRIES */
+#industries{background:var(--bg);}
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.ind-card{background:var(--card);border:1px solid rgba(0,212,255,.08);border-radius:var(--r);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:all .25s;position:relative;overflow:hidden;}
+.ind-card::after{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--cyan);transform:scaleY(0);transition:transform .3s;transform-origin:top;}
+.ind-card:hover{border-color:rgba(0,212,255,.25);transform:translateX(4px);}
+.ind-card:hover::after{transform:scaleY(1);}
+.ind-card.og{border-color:rgba(255,0,119,.2);}
+.ind-card.og::after{background:var(--pink);}
+.ind-card.og:hover{border-color:rgba(255,0,119,.4);}
+.ind-ico{font-size:1.6rem;flex-shrink:0;}
+.ind-card h4{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.3rem;}
+.ind-card p{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.og-badge{font-family:'JetBrains Mono',monospace;font-size:.6rem;background:var(--pink);color:#fff;padding:2px 7px;border-radius:6px;margin-left:.4rem;vertical-align:middle;}
+
+/* CONTACT */
+#contact{background:var(--bg2);position:relative;overflow:hidden;}
+#contact-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.4;}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1;}
+.contact-links{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
+.contact-link{display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.9rem;transition:color .2s;padding:.5rem 0;border-bottom:1px solid rgba(0,212,255,.06);}
+.contact-link:hover{color:var(--cyan);}
+.contact-link span{font-size:1.1rem;}
+.cta-box{background:var(--card);border:1px solid rgba(0,212,255,.15);border-radius:20px;padding:2.5rem;text-align:center;}
+.cta-box h3{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:.8rem;}
+.cta-box p{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:1.8rem;}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid rgba(0,212,255,.08);padding:2rem;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-brand img{height:48px;width:auto;display:block;}
+.footer-right{display:flex;align-items:center;gap:1.5rem;}
+.footer-copy{font-size:.78rem;color:var(--muted);}
+.li-link{color:var(--cyan);transition:color .2s;}
+.li-link:hover{color:var(--pink);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-content{margin:0 auto;text-align:center;}
+  .hero-btns{justify-content:center;}
+  .hero-stats{justify-content:center;}
+  .valve-layout,.contact-inner,.sol-grid{grid-template-columns:1fr;}
+  .eng-grid,.ind-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+}
+@media(max-width:600px){
+  .eng-grid,.ind-grid{grid-template-columns:1fr;}
+  section{padding:70px 1.2rem;}
+}
+
+/* GLITCH animation for title */
+@keyframes flicker{0%,100%{opacity:1;}92%{opacity:1;}93%{opacity:.4;}95%{opacity:1;}97%{opacity:.6;}98%{opacity:1;}}
+.hero-h1{animation:flicker 8s infinite;}
+
+/* Pulse dot */
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
+.pulse{animation:pulse 2s infinite;}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav-container">
-      <img src="branding.png" alt="QunixTech Logo" class="logo" />
-      <nav>
-        <a href="#solutions">Solutions</a>
-        <a href="#industries">Industries</a>
-        <a href="#team">Team</a>
-        <a href="#careers">Careers</a>
-        <a href="#contact">Contact</a>
-      </nav>
+
+<nav id="navbar">
+  <div class="nav-brand"><img src="https://raw.githubusercontent.com/QunixTech/webpage/main/branding.png" alt="QunixTech"/></div>
+  <div class="nav-links">
+    <a href="#engineering">Engineering</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#valve">Valve Health</a>
+    <a href="#industries">Industries</a>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">⬡ INTELLIGENT SYSTEMS ENGINEERING</div>
+    <img src="https://raw.githubusercontent.com/QunixTech/webpage/main/branding.png" alt="QunixTech" class="hero-logo"/>
+    <h1 class="hero-h1" style="display:none;">QunixTech</h1>
+    <p class="hero-sub">Shaping Next-Gen Solutions</p>
+    <p class="hero-desc">We combine deep engineering expertise with cutting-edge AI to help industries operate safer, smarter, and more efficiently.</p>
+    <div class="hero-btns">
+      <a href="#engineering" class="btn btn-primary">Explore Services</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
     </div>
-  </header>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="val" data-count="6">0</div><div class="lbl">INDUSTRIES</div></div>
+      <div class="stat-item"><div class="val" data-count="5">0</div><div class="lbl">CORE SERVICES</div></div>
+      <div class="stat-item"><div class="val" id="uptime-val">99.9%</div><div class="lbl">UPTIME TARGET</div></div>
+    </div>
+  </div>
+</section>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="container">
-        <img src="branding.png" alt="QunixTech Logo" class="hero-logo" />
-        <h1>QunixTech</h1>
-        <p class="tagline">Shaping Next-Gen Solutions</p>
-        <a href="#solutions" class="cta-btn">Explore Solutions</a>
+<!-- CIRCUIT DIVIDER -->
+<div class="circuit-divider">
+  <canvas id="circuit-canvas"></canvas>
+</div>
+
+<!-- ENGINEERING -->
+<section id="engineering">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">🔧 ENGINEERING SERVICES</div>
+      <h2 class="sec-h2">What We <span>Build</span></h2>
+      <p class="sec-lead">From bare-metal firmware to full autonomous stacks — we engineer at every layer of the system.</p>
+    </div>
+    <div class="eng-grid reveal">
+      <div class="eng-card">
+        <div class="eng-icon">💾</div>
+        <h3>Embedded Software & Firmware</h3>
+        <p>Real-time firmware for resource-constrained systems, bare-metal to RTOS.</p>
+        <span class="tag">C / C++ / Rust</span>
       </div>
-      <div class="gradient-bg"></div>
-    </section>
-    
-    <!-- Solutions Section -->
-    <section id="solutions" class="info-section">
-      <div class="container">
-        <h2>Our Solutions</h2>
-        <div class="card-grid">
-          <div class="card">
-            <div class="card-icon">🚀</div>
-            <h3>AI & Automation</h3>
-            <p>Unlock productivity with smart automation and data-driven insights.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">🔒</div>
-            <h3>Cybersecurity</h3>
-            <p>Protect your digital assets with next-gen security solutions.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon">☁️</div>
-            <h3>Cloud Services</h3>
-            <p>Scale your business with robust and flexible cloud infrastructure.</p>
+      <div class="eng-card">
+        <div class="eng-icon">📡</div>
+        <h3>GNSS, IMU & Sensor Fusion</h3>
+        <p>High-precision navigation combining GPS, inertial, and environmental sensors.</p>
+        <span class="tag">Kalman / EKF</span>
+      </div>
+      <div class="eng-card">
+        <div class="eng-icon">🤖</div>
+        <h3>ROS2 / PX4 Robotics</h3>
+        <p>Full-stack robotics integration for ground, aerial, and marine platforms.</p>
+        <span class="tag">ROS2 / PX4</span>
+      </div>
+      <div class="eng-card">
+        <div class="eng-icon">🛡️</div>
+        <h3>DO-178C / ISO 26262</h3>
+        <p>Safety-critical software lifecycle for aerospace and automotive certifications.</p>
+        <span class="tag">DAL A–D</span>
+      </div>
+      <div class="eng-card">
+        <div class="eng-icon">🔬</div>
+        <h3>MBSE, V&V & Test Automation</h3>
+        <p>Model-Based Systems Engineering, verification & validation, automated test frameworks.</p>
+        <span class="tag">SysML / DOORS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIRCUIT DIVIDER 2 -->
+<div class="circuit-divider">
+  <canvas id="circuit-canvas2"></canvas>
+</div>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">💡 TECHNOLOGY SOLUTIONS</div>
+      <h2 class="sec-h2">What We <span>Deliver</span></h2>
+      <p class="sec-lead">End-to-end intelligent platforms across aerospace, automotive, and industrial sectors.</p>
+    </div>
+    <div class="sol-grid reveal">
+      <div class="sol-card">
+        <div class="sol-num">01</div>
+        <h3>Autonomous Robotics & AI Mechatronics</h3>
+        <p>End-to-end intelligent robotic systems combining perception, planning, and actuation for real-world deployment.</p>
+        <div class="sol-bar"></div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">02</div>
+        <h3>UAV Control & Avionics Systems</h3>
+        <p>Flight control software, GCS integration, and airworthy avionics hardware-software stacks built to certifiable standards.</p>
+        <div class="sol-bar"></div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">03</div>
+        <h3>EV / ADAS Platforms</h3>
+        <p>Automotive electronics for electric drivetrains, advanced driver-assistance systems, and V2X communication.</p>
+        <div class="sol-bar"></div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">04</div>
+        <h3>Real-Time Navigation & Control</h3>
+        <p>Low-latency control architectures for safety-critical navigation in GPS-denied and contested environments.</p>
+        <div class="sol-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALVE HEALTH -->
+<section id="valve">
+  <div class="sec-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <div class="valve-badge">⬡ FEATURED SOLUTION</div>
+      <div class="sec-tag" style="justify-content:center;display:block;">OIL & GAS</div>
+      <h2 class="sec-h2" style="text-align:center;">Valve Health <span>System</span></h2>
+      <p class="sec-lead" style="margin:0 auto;">AI-powered predictive monitoring — detect valve degradation before it becomes downtime.</p>
+    </div>
+    <div class="valve-layout reveal">
+      <div class="valve-canvas-wrap">
+        <canvas id="valve-canvas"></canvas>
+      </div>
+      <div class="valve-features">
+        <div class="vf">
+          <div class="vf-dot pink pulse"></div>
+          <div>
+            <h4>Real-Time Sensor Fusion</h4>
+            <p>Vibration, pressure differential, temperature & acoustic emission unified into a single health score.</p>
           </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- Industries Section -->
-    <section id="industries" class="info-section vibrant-bg">
-      <div class="container">
-        <h2>Industries Served</h2>
-        <div class="industry-grid">
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&fit=crop&w=400&q=80" alt="Aerospace - Airplane in a hangar" />
-            <h3>Aerospace</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Automotive - Red car dashboard/steering wheel" />
-            <h3>Automotive</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=400&q=80" alt="MRO - Technician working on machinery" />
-            <h3>MRO</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Healthcare - Healthcare professional in scrubs" />
-            <h3>Healthcare</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Finance - Financial charts and computer" />
-            <h3>Finance</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1461344577544-4e5dc9487184?auto=format&fit=crop&w=400&q=80" alt="Manufacturing - Factory interior" />
-            <h3>Manufacturing</h3>
-          </div>
-          <div class="industry-card">
-            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80" alt="Retail - Clothing store interior" />
-            <h3>Retail</h3>
+        <div class="vf">
+          <div class="vf-dot"></div>
+          <div>
+            <h4>Predictive Failure Alerts</h4>
+            <p>ML models flag degradation 2–4 weeks before failure, reducing unplanned shutdowns and HSE incidents.</p>
           </div>
         </div>
+        <div class="vf">
+          <div class="vf-dot green pulse"></div>
+          <div>
+            <h4>Digital Valve Twin</h4>
+            <p>Live digital twin updated from field sensors — inspect remotely without entering hazardous areas.</p>
+          </div>
+        </div>
+        <div class="vf">
+          <div class="vf-dot"></div>
+          <div>
+            <h4>SCADA / DCS Integration</h4>
+            <p>Plugs into Honeywell, Emerson, or Siemens via OPC-UA and MQTT — no rip and replace.</p>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="margin-top:1rem;width:fit-content;">Request a Demo →</a>
       </div>
-    </section>
-    
-    <!-- Team Section -->
-    <section id="team" class="info-section">
-      <div class="container">
-        <h2>Our Team</h2>
-        <p class="section-desc">A collective of passionate engineers, designers, and strategists powering transformative solutions.</p>
-      </div>
-    </section>
-    
-    <!-- Careers Section -->
-    <section id="careers" class="info-section alt-bg">
-      <div class="container">
-        <h2>Careers</h2>
-        <p>We're always looking for passionate innovators, engineers, and tech enthusiasts to join our team.</p>
-        <a href="mailto:careers@qunixtech.com" class="cta-btn secondary">Apply Now</a>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <div class="container footer-content">
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">🌍 INDUSTRIES SERVED</div>
+      <h2 class="sec-h2">Where We <span>Operate</span></h2>
+      <p class="sec-lead">Six sectors. One common thread — systems that must work when it matters most.</p>
+    </div>
+    <div class="ind-grid reveal">
+      <div class="ind-card">
+        <div class="ind-ico">✈️</div>
+        <div>
+          <h4>Aerospace & UAVs</h4>
+          <p>Flight control, avionics, DO-178C certified software for manned and unmanned platforms.</p>
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-ico">⚡</div>
+        <div>
+          <h4>Electric & Autonomous Vehicles</h4>
+          <p>EV drivetrains, ADAS perception stacks, ISO 26262 functional safety.</p>
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-ico">🏭</div>
+        <div>
+          <h4>Smart Factories & Industry 4.0</h4>
+          <p>IIoT platforms, robotic cells, predictive maintenance, real-time analytics.</p>
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-ico">🌾</div>
+        <div>
+          <h4>AgriTech Automation</h4>
+          <p>Autonomous field robots, precision crop monitoring drones, yield optimization.</p>
+        </div>
+      </div>
+      <div class="ind-card">
+        <div class="ind-ico">🏥</div>
+        <div>
+          <h4>Medical Mechatronics</h4>
+          <p>Precision actuators, surgical robotics, FDA-aligned firmware and verification.</p>
+        </div>
+      </div>
+      <div class="ind-card og">
+        <div class="ind-ico">🛢️</div>
+        <div>
+          <h4>Oil & Gas <span class="og-badge">NEW</span></h4>
+          <p>Valve health monitoring, pipeline AI, SCADA/DCS integration via OPC-UA.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <canvas id="contact-canvas"></canvas>
+  <div class="sec-inner">
+    <div class="contact-inner reveal">
       <div>
-        <img src="branding.png" alt="QunixTech Logo" class="footer-logo" />
-        <p>&copy; 2025 QunixTech. All rights reserved.</p>
+        <div class="sec-tag">🔗 LET'S CONNECT</div>
+        <h2 class="sec-h2">Ready to bring <span>intelligent systems</span> to life?</h2>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;margin-bottom:1rem;">Whether you need embedded firmware, a UAV control stack, or AI-powered industrial monitoring — we're ready to build it with you.</p>
+        <div class="contact-links">
+          <a href="mailto:contact@qunixtech.com" class="contact-link"><span>📧</span> contact@qunixtech.com</a>
+          <a href="https://www.qunixtech.com" class="contact-link"><span>🌐</span> www.qunixtech.com</a>
+          <a href="https://www.linkedin.com/company/qunixtech" target="_blank" class="contact-link">
+            <span><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.604c0-1.098-.021-2.509-1.529-2.509-1.529 0-1.764 1.194-1.764 2.426v4.687h-3v-9h2.882v1.233h.041c.401-.76 1.38-1.561 2.841-1.561 3.041 0 3.604 2.004 3.604 4.609v4.719z"/></svg></span>
+            linkedin.com/company/qunixtech
+          </a>
+        </div>
       </div>
-      <div class="footer-socials">
-        <a href="https://www.linkedin.com/company/qunixtech" target="_blank" aria-label="LinkedIn">
-          <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.604c0-1.098-.021-2.509-1.529-2.509-1.529 0-1.764 1.194-1.764 2.426v4.687h-3v-9h2.882v1.233h.041c.401-.76 1.38-1.561 2.841-1.561 3.041 0 3.604 2.004 3.604 4.609v4.719z"/>
-          </svg>
-        </a>
+      <div class="cta-box">
+        <h3>Start a Conversation</h3>
+        <p>Tell us about your project and we'll get back to you within 24 hours.</p>
+        <a href="mailto:contact@qunixtech.com" class="btn btn-primary">Send a Message</a>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><img src="https://raw.githubusercontent.com/QunixTech/webpage/main/branding.png" alt="QunixTech"/></div>
+      <div class="footer-copy" style="margin-top:.3rem;">Embedded Systems · AI · Autonomous Platforms</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-copy">© 2025 QunixTech</div>
+      <a href="https://www.linkedin.com/company/qunixtech" target="_blank" class="li-link">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.604c0-1.098-.021-2.509-1.529-2.509-1.529 0-1.764 1.194-1.764 2.426v4.687h-3v-9h2.882v1.233h.041c.401-.76 1.38-1.561 2.841-1.561 3.041 0 3.604 2.004 3.604 4.609v4.719z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── HERO CANVAS: particle network ──
+(function(){
+  const c = document.getElementById('hero-canvas');
+  const ctx = c.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
+
+  class Particle{
+    constructor(){this.reset();}
+    reset(){
+      this.x=Math.random()*W; this.y=Math.random()*H;
+      this.vx=(Math.random()-.5)*.4; this.vy=(Math.random()-.5)*.4;
+      this.r=Math.random()*1.5+.5;
+      this.col=Math.random()>.7?'#ff0077':'#00d4ff';
+      this.life=Math.random()*200+100; this.age=0;
+    }
+    update(){this.x+=this.vx;this.y+=this.vy;this.age++;
+      if(this.x<0||this.x>W||this.y<0||this.y>H||this.age>this.life)this.reset();
+    }
+    draw(){
+      const a=Math.sin(this.age/this.life*Math.PI);
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=this.col.replace(')',`,${a*.8})`).replace('rgb','rgba').replace('#00d4ff',`rgba(0,212,255,${a*.8})`).replace('#ff0077',`rgba(255,0,119,${a*.8})`);
+      ctx.fill();
+    }
+  }
+
+  function init(){particles=[];for(let i=0;i<80;i++)particles.push(new Particle());}
+  init();
+
+  let mx=W/2,my=H/2;
+  document.getElementById('hero').addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // dark gradient bg
+    const g=ctx.createRadialGradient(W*.3,H*.4,.1,W*.3,H*.4,H*.8);
+    g.addColorStop(0,'rgba(0,40,80,.6)');g.addColorStop(1,'rgba(5,13,26,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+    // connect nearby particles
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,212,255,${(1-d/120)*.18})`;
+          ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+      particles[i].update();
+      particles[i].draw();
+    }
+
+    // mouse glow
+    const mg=ctx.createRadialGradient(mx,my,0,mx,my,200);
+    mg.addColorStop(0,'rgba(0,212,255,.04)');mg.addColorStop(1,'rgba(0,212,255,0)');
+    ctx.fillStyle=mg;ctx.fillRect(0,0,W,H);
+
+    // hex grid overlay (subtle)
+    drawHexGrid();
+    requestAnimationFrame(draw);
+  }
+
+  function drawHexGrid(){
+    const size=40,cols=Math.ceil(W/size/1.7)+2,rows=Math.ceil(H/size)+2;
+    ctx.strokeStyle='rgba(0,212,255,0.04)';ctx.lineWidth=.5;
+    for(let r=0;r<rows;r++){
+      for(let col=0;col<cols;col++){
+        const x=col*size*1.73+(r%2)*size*.87,y=r*size*1.5;
+        hexPath(ctx,x,y,size*.5);ctx.stroke();
+      }
+    }
+  }
+  function hexPath(ctx,x,y,r){
+    ctx.beginPath();
+    for(let i=0;i<6;i++){
+      const a=Math.PI/180*(60*i-30);
+      i===0?ctx.moveTo(x+r*Math.cos(a),y+r*Math.sin(a)):ctx.lineTo(x+r*Math.cos(a),y+r*Math.sin(a));
+    }
+    ctx.closePath();
+  }
+  draw();
+})();
+
+// ── CIRCUIT DIVIDER ──
+function drawCircuit(canvasId){
+  const c=document.getElementById(canvasId);
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H,t=0;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+  const nodes=[];
+  for(let i=0;i<6;i++)nodes.push({x:W*.1+i*(W*.8/5),y:H*.5+Math.sin(i*1.2)*15});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // horizontal line
+    ctx.strokeStyle='rgba(0,212,255,.15)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+    // animated pulse
+    const px=(t%1)*W;
+    const pg=ctx.createRadialGradient(px,H/2,0,px,H/2,30);
+    pg.addColorStop(0,'rgba(0,212,255,.7)');pg.addColorStop(1,'rgba(0,212,255,0)');
+    ctx.fillStyle=pg;ctx.fillRect(px-30,0,60,H);
+    // nodes
+    nodes.forEach((n,i)=>{
+      ctx.beginPath();ctx.arc(n.x,H/2,3,0,Math.PI*2);
+      ctx.fillStyle=i%2===0?'rgba(0,212,255,.6)':'rgba(255,0,119,.6)';ctx.fill();
+    });
+    t+=.003;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+drawCircuit('circuit-canvas');
+drawCircuit('circuit-canvas2');
+
+// ── VALVE CANVAS ──
+(function(){
+  const c=document.getElementById('valve-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H,t=0,health=72,vibData=[],pressData=[];
+  function resize(){
+    W=c.width=c.offsetWidth*window.devicePixelRatio||520;
+    H=c.height=340*window.devicePixelRatio||340;
+    c.style.width='100%';c.style.height='340px';
+    ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+    W=c.offsetWidth;H=340;
+  }
+  resize();
+  // generate signal data
+  for(let i=0;i<80;i++){
+    vibData.push(Math.random()*.6+.2+Math.sin(i*.4)*.2);
+    pressData.push(Math.random()*.4+.4+Math.cos(i*.3)*.15);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // bg grid
+    ctx.strokeStyle='rgba(0,212,255,.04)';ctx.lineWidth=.5;
+    for(let x=0;x<W;x+=30){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    const cx=W/2,cy=H*.42;
+
+    // pipes
+    const pipeY=cy-10,pipeH=20;
+    const pg=ctx.createLinearGradient(0,pipeY,0,pipeY+pipeH);
+    pg.addColorStop(0,'#2a4a7a');pg.addColorStop(.5,'#3a6aaa');pg.addColorStop(1,'#1a3460');
+    ctx.fillStyle=pg;
+    ctx.beginPath();ctx.roundRect(20,pipeY,cx-80,pipeH,3);ctx.fill();
+    ctx.strokeStyle='rgba(74,138,204,.5)';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.roundRect(cx+80,pipeY,W-cx-100,pipeH,3);ctx.fill();ctx.stroke();
+
+    // flow animation in pipe
+    const flowOff=(-t*60)%30;
+    ctx.strokeStyle='rgba(0,212,255,.25)';ctx.lineWidth=1;ctx.setLineDash([10,20]);ctx.lineDashOffset=flowOff;
+    ctx.beginPath();ctx.moveTo(25,cy);ctx.lineTo(cx-82,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx+82,cy);ctx.lineTo(W-25,cy);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // valve body
+    const vbg=ctx.createLinearGradient(cx-55,0,cx+55,0);
+    vbg.addColorStop(0,'#1e4080');vbg.addColorStop(1,'#0d2040');
+    ctx.fillStyle=vbg;
+    ctx.beginPath();ctx.roundRect(cx-70,cy-30,140,60,10);ctx.fill();
+    ctx.strokeStyle=`rgba(0,212,255,${.5+Math.sin(t*2)*.2})`;ctx.lineWidth=1.5;ctx.stroke();
+
+    // valve disc
+    ctx.beginPath();ctx.ellipse(cx,cy,22,28,0,0,Math.PI*2);
+    ctx.fillStyle='#0d2a50';ctx.fill();
+    ctx.strokeStyle='rgba(0,212,255,.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.ellipse(cx,cy,12,16,0,0,Math.PI*2);
+    ctx.fillStyle='#091828';ctx.fill();ctx.strokeStyle='rgba(0,168,221,.5)';ctx.lineWidth=1;ctx.stroke();
+
+    // stem
+    ctx.fillStyle='#1e3f70';ctx.strokeStyle='rgba(74,138,238,.5)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(cx-6,cy-90,12,62,4);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.roundRect(cx-14,cy-96,28,10,4);ctx.fill();ctx.stroke();
+
+    // handwheel (rotating)
+    const ang=t*.5;
+    ctx.save();ctx.translate(cx,cy-110);ctx.rotate(ang);
+    ctx.strokeStyle=`rgba(0,212,255,${.7+Math.sin(t*2)*.2})`;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(0,0,22,0,Math.PI*2);ctx.stroke();
+    for(let i=0;i<4;i++){
+      const a=Math.PI/2*i;
+      ctx.beginPath();ctx.moveTo(Math.cos(a)*22,Math.sin(a)*22);ctx.lineTo(-Math.cos(a)*22,-Math.sin(a)*22);ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.fillStyle='rgba(0,212,255,.9)';ctx.fill();
+    // glow
+    const hg=ctx.createRadialGradient(0,0,0,0,0,30);
+    hg.addColorStop(0,'rgba(0,212,255,.15)');hg.addColorStop(1,'rgba(0,212,255,0)');
+    ctx.fillStyle=hg;ctx.fillRect(-30,-30,60,60);
+    ctx.restore();
+
+    // sensor nodes
+    function sensorPulse(x,y,col,phase){
+      const a=.6+Math.sin(t*3+phase)*.4;
+      const r=8+Math.sin(t*4+phase)*2;
+      const sg=ctx.createRadialGradient(x,y,0,x,y,r*2);
+      sg.addColorStop(0,col.replace(')',`,${a})`));
+      sg.addColorStop(1,col.replace(')',',0)'));
+      ctx.fillStyle=sg;ctx.beginPath();ctx.arc(x,y,r*2,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,r*.5,0,Math.PI*2);
+      ctx.fillStyle=col;ctx.fill();
+    }
+    sensorPulse(cx-65,cy,'rgba(255,0,119',0);
+    sensorPulse(cx+65,cy,'rgba(0,212,255',1);
+    sensorPulse(cx,cy-28,'rgba(0,255,136',2);
+
+    // data lines
+    ctx.setLineDash([4,4]);ctx.lineWidth=.8;
+    ctx.strokeStyle='rgba(255,0,119,.35)';
+    ctx.beginPath();ctx.moveTo(cx-65,cy+8);ctx.lineTo(50,H-100);ctx.stroke();
+    ctx.strokeStyle='rgba(0,212,255,.35)';
+    ctx.beginPath();ctx.moveTo(cx+65,cy+8);ctx.lineTo(W-50,H-100);ctx.stroke();
+    ctx.strokeStyle='rgba(0,255,136,.35)';
+    ctx.beginPath();ctx.moveTo(cx,cy-28);ctx.lineTo(W/2,H-100);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // dashboard panels
+    function panel(x,y,pw,ph,col,title,value){
+      ctx.fillStyle='rgba(10,20,45,.85)';ctx.strokeStyle=col;ctx.lineWidth=1;
+      ctx.beginPath();ctx.roundRect(x,y,pw,ph,8);ctx.fill();ctx.stroke();
+      ctx.fillStyle=col;ctx.font=`700 8px 'JetBrains Mono',monospace`;ctx.textAlign='center';
+      ctx.fillText(title,x+pw/2,y+14);
+      ctx.fillStyle=col.replace('.8)','1)');ctx.font=`700 11px 'JetBrains Mono',monospace`;
+      ctx.fillText(value,x+pw/2,y+30);
+    }
+
+    const vib=(3.8+Math.sin(t*7)*.9).toFixed(1);
+    panel(10,H-90,115,55,'rgba(255,0,119,.8)','VIBRATION',`${vib} mm/s`);
+
+    // mini vibration sparkline
+    ctx.strokeStyle='rgba(255,0,119,.7)';ctx.lineWidth=1.2;ctx.beginPath();
+    const vsl=vibData.length,vpw=95,vsx=20,vsy=H-55,vsh=18;
+    for(let i=0;i<vsl;i++){
+      const px2=vsx+i/vsl*vpw,py=vsy+vsh-(vibData[(i+Math.floor(t*20))%vsl]/1.2)*vsh;
+      i===0?ctx.moveTo(px2,py):ctx.lineTo(px2,py);
+    }
+    ctx.stroke();
+
+    // health bar panel
+    const hw2=110;
+    ctx.fillStyle='rgba(10,20,45,.85)';ctx.strokeStyle='rgba(0,255,136,.8)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(W/2-hw2/2,H-90,hw2,55,8);ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba(0,255,136,.9)';ctx.font=`700 8px 'JetBrains Mono',monospace`;ctx.textAlign='center';
+    ctx.fillText('VALVE HEALTH',W/2,H-76);
+    // animated bar
+    ctx.fillStyle='rgba(0,20,10,.6)';ctx.beginPath();ctx.roundRect(W/2-45,H-66,90,8,4);ctx.fill();
+    const hpct=health/100;
+    const hbg=ctx.createLinearGradient(W/2-45,0,W/2+45,0);
+    hbg.addColorStop(0,'#00ff88');hbg.addColorStop(1,'#00d4ff');
+    ctx.fillStyle=hbg;ctx.beginPath();ctx.roundRect(W/2-45,H-66,90*hpct,8,4);ctx.fill();
+    ctx.fillStyle='rgba(0,255,136,1)';ctx.font=`700 10px 'JetBrains Mono',monospace`;
+    ctx.fillText(`${health}% GOOD`,W/2,H-50);
+
+    // pressure panel
+    const pval=(11.8+Math.sin(t*2.3)*.8).toFixed(1);
+    panel(W-125,H-90,115,55,'rgba(0,212,255,.8)','PRESSURE DROP',`${pval} PSI`);
+    ctx.strokeStyle='rgba(0,212,255,.7)';ctx.lineWidth=1.2;ctx.beginPath();
+    const psl=pressData.length,ppw=95,psx=W-115,psy=H-55,psh=18;
+    for(let i=0;i<psl;i++){
+      const px3=psx+i/psl*ppw,py=psy+psh-(pressData[(i+Math.floor(t*15))%psl]/1.2)*psh;
+      i===0?ctx.moveTo(px3,py):ctx.lineTo(px3,py);
+    }
+    ctx.stroke();
+
+    // AI badge
+    ctx.fillStyle='rgba(255,0,119,.1)';ctx.strokeStyle='rgba(255,0,119,.5)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(W-145,8,138,22,11);ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba(255,0,119,.9)';ctx.font=`700 9px 'JetBrains Mono',monospace`;ctx.textAlign='center';
+    ctx.fillText('⬡ AI PREDICTIVE',W-76,23);
+
+    ctx.fillStyle='rgba(74,138,238,.5)';ctx.font=`8px 'JetBrains Mono',monospace`;ctx.textAlign='left';
+    ctx.fillText('QUNIXTECH VHS v2.4',10,18);
+
+    t+=.016;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── CONTACT CANVAS: floating data streams ──
+(function(){
+  const c=document.getElementById('contact-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H,t=0,streams=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  function Stream(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.speed=Math.random()*1+.3;this.len=Math.floor(Math.random()*8)+3;
+    this.chars=[];for(let i=0;i<this.len;i++)this.chars.push(Math.random()>.5?'1':'0');
+    this.col=Math.random()>.5?'rgba(0,212,255,':'rgba(0,255,136,';
+  }
+  function init(){streams=[];for(let i=0;i<30;i++)streams.push(new Stream());}
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    streams.forEach(s=>{
+      s.chars.forEach((ch,i)=>{
+        const a=Math.max(0,(s.len-i)/s.len*.25);
+        ctx.fillStyle=s.col+a+')';
+        ctx.font=`${10+i*.5}px 'JetBrains Mono',monospace`;
+        ctx.fillText(ch,s.x,s.y-i*14);
+      });
+      s.y+=s.speed;
+      if(s.y>H+s.len*14){s.y=-10;s.x=Math.random()*W;}
+    });
+    t+=.01;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── SCROLL REVEAL ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// ── COUNT-UP STATS ──
+function countUp(el,target){
+  let v=0;const step=target/40;
+  const t=setInterval(()=>{v=Math.min(v+step,target);el.textContent=Math.round(v)+(el.dataset.suffix||'');if(v>=target)clearInterval(t);},40);
+}
+const statsObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('[data-count]').forEach(el=>countUp(el,+el.dataset.count));
+      statsObserver.disconnect();
+    }
+  });
+},{threshold:.5});
+const statsEl=document.querySelector('.hero-stats');
+if(statsEl)statsObserver.observe(statsEl);
+</script>
 </body>
 </html>
